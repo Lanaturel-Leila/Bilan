@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Bilan Corps – Lanaturel by Leïla</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--blanc:#FFFFFF;--brun:#5E4B3C;--rose:#C94F7C;--bordeaux:#50080F;--bleu:#00BFFF;--bleu-light:#e6f7ff;--brun-light:#f5ede8;--brun-check:#8B6350}
+body{font-family:'DM Sans',sans-serif;background:#faf8f6;color:var(--brun);min-height:100vh}
+header{background:var(--blanc);border-bottom:2px solid var(--rose);padding:28px 20px 20px;text-align:center}
+.logo-text{font-family:'Lora',serif;font-style:italic;font-size:13px;letter-spacing:3px;color:var(--bordeaux);text-transform:uppercase;margin-bottom:10px}
+header h1{font-family:'Lora',serif;font-weight:700;font-size:clamp(22px,5vw,32px);color:var(--brun);line-height:1.2;margin-bottom:10px}
+header p{font-size:14px;color:#888;max-width:420px;margin:0 auto;line-height:1.6}
+.intro{background:var(--blanc);margin:20px 16px;border-radius:12px;padding:20px;border-left:4px solid var(--rose)}
+.intro p{font-size:14px;line-height:1.7;color:var(--brun)}
+.legend{display:flex;gap:12px;margin:0 16px 20px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:8px;background:var(--blanc);border-radius:30px;padding:8px 16px;font-size:13px;font-weight:500;flex:1;min-width:140px;justify-content:center}
+.legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.dot-bleu{background:var(--bleu)}.dot-brun{background:var(--brun-check)}
+.section{margin:0 16px 24px}
+.section-title{font-family:'Lora',serif;font-size:16px;font-weight:700;color:var(--brun);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8ddd8;display:flex;align-items:center;gap:8px}
+.question-card{background:var(--blanc);border-radius:12px;padding:16px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;cursor:pointer;border:2px solid transparent;transition:border 0.2s,background 0.2s;-webkit-tap-highlight-color:transparent}
+.question-card.checked-bleu{background:var(--bleu-light);border-color:var(--bleu)}
+.question-card.checked-brun{background:var(--brun-light);border-color:var(--brun-check)}
+.checkbox{width:22px;height:22px;border-radius:6px;border:2px solid #ccc;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:background 0.2s,border 0.2s}
+<style>
+.score-section{background:var(--blanc);margin:0 16px 24px;border-radius:12px;padding:20px;display:none}
+.score-section.visible{display:block}
+.score-title{font-family:'Lora',serif;font-size:15px;font-weight:700;margin-bottom:14px;color:var(--brun)}
+.score-bars{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;font-weight:500}
+.bar-track{background:#f0ebe8;border-radius:20px;height:10px;overflow:hidden}
+.bar-fill{height:100%;border-radius:20px;transition:width 0.6s ease}
+.bar-fill.bleu{background:var(--bleu)}.bar-fill.brun{background:var(--brun-check)}
+.result-box{display:none;background:var(--blanc);margin:0 16px 32px;border-radius:16px;padding:24px 20px;text-align:center;box-shadow:0 4px 20px rgba(94,75,60,0.1)}
+.result-box.visible{display:block}
+.result-emoji{font-size:36px;margin-bottom:10px}
+.result-title{font-family:'Lora',serif;font-size:18px;font-weight:700;color:var(--brun);margin-bottom:8px}
+.result-desc{font-size:14px;color:#777;line-height:1.6;margin-bottom:20px}
+.cta-btn{display:block;background:var(--rose);color:white;text-decoration:none;font-family:'Lora',serif;font-weight:700;font-size:15px;padding:16px 20px;border-radius:50px;margin-bottom:12px;transition:opacity 0.2s;letter-spacing:0.5px}
+.cta-btn.secondary{background:transparent;color:var(--brun);border:2px solid var(--brun)}
+.cta-hint{font-size:12px;color:#aaa;margin-top:8px}
+.sticky-score{position:fixed;bottom:0;left:0;right:0;background:var(--blanc);border-top:2px solid #f0ebe8;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.sticky-counts{display:flex;gap:16px}
+.sticky-count{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600}
+.sticky-dot{width:10px;height:10px;border-radius:50%}
+.voir-btn{background:var(--brun);color:white;border:none;border-radius:30px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.voir-btn:disabled{opacity:0.4;cursor:default}
+footer{text-align:center;padding:20px 20px 80px;font-size:12px;color:#bbb;font-style:italic}
+footer span{color:var(--bordeaux)}
+</style>
+</head>
+<body>
+<header>
+<div class="logo-text">Lanaturel by Leïla</div>
+<h1>Mon Bilan Corps 🔍</h1>
+<p>Découvre si tu as de la rétention d'eau, de la cellulite, ou les deux — en moins de 2 minutes.</p>
+</header>
+<div class="intro"><p>Coche toutes les cases qui te correspondent. Sois honnête avec toi-même 😊 À la fin, tu recevras une recommandation personnalisée.</p></div>
+<div class="legend">
+<div class="legend-item"><div class="legend-dot dot-bleu"></div>Rétention d'eau</div>
+<div class="legend-item"><div class="legend-dot dot-brun"></div>Graisse / Cellulite</div>
+</div>
+<div class="section">
+<div class="section-title">💧 Tes jambes & ton corps</div>
+<div class="question-card" data-type="bleu" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">Mes chevilles gonflent dans la journée, surtout le soir</div><div class="type-badge badge-bleu">Lymphe</div></div>
+<div class="question-card" data-type="bleu" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">J'ai souvent les jambes lourdes, surtout en fin de journée</div><div class="type-badge badge-bleu">Lymphe</div></div>
+<div class="question-card" data-type="bl
+<div class="section">
+<div class="section-title">🌸 Ton cycle & tes hormones</div>
+<div class="question-card" data-type="bleu" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">Je gonfle davantage avant mes règles (ventre, seins, visage)</div><div class="type-badge badge-bleu">Lymphe</div></div>
+<div class="question-card" data-type="bleu" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">Mon poids varie de 1 à 3 kg d'un jour à l'autre sans raison alimentaire</div><div class="type-badge badge-bleu">Lymphe</div></div>
+<div class="question-card" data-type="brun" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">J'ai une zone rebelle (ventre, hanches, selle de cheval) qui ne bouge pas même en faisant attention</div><div class="type-badge badge-brun">Cellulite</div></div>
+<div class="question-card" data-type="brun" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">Mon poids est stable mais ma silhouette a changé après une grossesse ou prise de poids</div><div class="type-badge badge-brun">Cellulite</div></div>
+</div>
+<div class="section">
+<div class="section-title">🧴 Tes habitudes & ton quotidien</div>
+<div class="question-card" data-type="bleu" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">Je reste souvent assise ou debout plusieurs heures sans bouger</div><div class="type-badge badge-bleu">Lymphe</div></div>
+<div class="question-card" data-type="bleu" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">Je ne bois pas assez d'eau dans la journée (moins de 1,5L)</div><div class="type-badge badge-bleu">Lymphe</div></div>
+<div class="question-card" data-type="bleu" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">Je porte souvent des vêtements serrés (jeans, chaussettes, soutien-gorge serré)</div><div class="type-badge badge-bleu">Lymphe</div></div>
+<div class="question-card" data-type="brun" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">J'ai déjà essayé des crèmes anti-cellulite sans résultat durable</div><div class="type-badge badge-brun">Cellulite</div></div>
+<div class="question-card" data-type="brun" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">Mes zones de graisse sont froides au toucher</div><div class="type-badge badge-brun">Cellulite</div></div>
+</div>
+<div class="section">
+<div class="section-title">😴 Comment tu te sens</div>
+<div class="question-card" data-type="bleu" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">Je me sens souvent fatiguée ou à plat sans raison apparente</div><div class="type-badge badge-bleu">Lymphe</div></div>
+<div class="question-card" data-type="bleu" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">J'ai souvent des maux de tête ou une sensation de tête lourde</div><div class="type-badge badge-bleu">Lymphe</div></div>
+<div class="question-card" data-type="brun" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">Je ne suis pas à l'aise dans mes vêtements à cause de certaines zones de mon corps</div><div class="type-badge badge-brun">Cellulite</div></div>
+<div class="question-card" data-type="brun" onclick="toggle(this)"><div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="question-text">J'ai l'impression que mon corps ne répond plus malgré mes efforts</div><div class="type-badge badge-brun">Cellulite</div></div>
+</div>
+<div class="score-section" id="scoreSection"><div class="score-title">Ton profil :</div><div class="score-bars"><div><div class="bar-label"><span>💧 Rétention d'eau</span><span id="bleuCount">0/11</span></div><div class="bar-track"><div class="bar-fill bleu" id="bleuBar" style="width:0%"></div></div></div><div><div class="bar-label"><span>🟤 Graisse / Cellulite</span><span id="brunCount">0/9</span></div><div class="bar-track"><div class="bar-fill brun" id="brunBar" style="width:0%"></div></div></div></div></div>
+<div class="result-box" id="resultBox"><div class="result-emoji" id="resultEmoji"></div><div class="result-title" id="resultTitle"></div><div class="result-desc" id="resultDesc"></div><a href="https://www.planity.com/lanaturel-drainage-renata-massages-soin-visage-minceur-35135-chantepie" target="_blank" class="cta-btn" id="ctaBtn"></a><a href="https://www.planity.com/lanaturel-drainage-renata-massages-soin-visage-minceur-35135-chantepie" target="_blank" class="cta-btn secondary">Voir tous les soins →</a><p class="cta-hint">Cabinet à Chantepie · Leïla Ounissi</p></div>
+<footer>Ce bilan est indicatif et ne remplace pas un avis médical.<br><span>Lanaturel by Leïla</span> — lanaturelbienetre.fr</footer>
+<div class="sticky-score"><div class="sticky-counts"><div class="sticky-count"><div class="sticky-dot" style="background:var(--bleu)"></div><span id="stickyBleu">0</span> lymphe</div><div class="sticky-count"><div class="sticky-dot" style="background:var(--brun-check)"></div><span id="stickyBrun">0</span> graisse</div></div><button class="voir-btn" id="voirBtn" onclick="showResult()" disabled>Voir mon bilan</button></div>
+<script>
+const MAX_BLEU=11,MAX_BRUN=9;let bleu=0,brun=0;
+function toggle(card){const type=card.dataset.type;const isChecked=card.classList.contains('checked-'+type);if(isChecked){card.classList.remove('checked-'+type);if(type==='bleu')bleu--;else brun--;}else{card.classList.add('checked-'+type);if(type==='bleu')bleu++;else brun++;}updateScore();}
+function updateScore(){document.getElementById('stickyBleu').textContent=bleu;document.getElementById('stickyBrun').textContent=brun;document.getElementById('voirBtn').disabled=(bleu+brun)<3;if(document.getElementById('scoreSection').classList.contains('visible'))updateBars();}
+function updateBars(){document.getElementById('bleuCount').textContent=bleu+'/'+MAX_BLEU;document.getElementById('brunCount').textContent=brun+'/'+MAX_BRUN;document.getElementById('bleuBar').style.width=Math.round((bleu/MAX_BLEU)*100)+'%';document.getElementById('brunBar').style.width=Math.round((brun/MAX_BRUN)*100)+'%';}
+function showResult(){document.getElementById('scoreSection').classList.add('visible');document.getElementById('resultBox').classList.add('visible');updateBars();const bp=bleu/MAX_BLEU,brp=brun/MAX_BRUN;let emoji,title,desc,cta;if(Math.abs(bp-brp)<0.15||(bp>0.3&&brp>0.3)){emoji='🌊🟤';title="Tu as les deux : rétention d'eau ET cellulite";desc="Ton corps cumule deux problématiques. Un bilan personnalisé avec moi te permettra d'établir un protocole sur-mesure.";cta='✨ Réserver un bilan avec Leïla';}else if(bp>=brp){emoji='💧';title="Tu as surtout de la rétention d'eau";desc="Ton système lymphatique est ralenti. Le drainage lymphatique est LA solution : il relance la circulation et dégonfle dès la première séance.";cta='💧 Réserver mon drainage lymphatique';}else{emoji='❄️';title="Tu as surtout de la cellulite résistante";desc="Ta cellulite ne répond plus aux crèmes ou au sport seul. La cryolipolyse détruit les cellules graisseuses de façon permanente.";cta='❄️ Réserver ma séance cryolipolyse';}
+document.getElementById('resultEmoji').textContent=emoji;document.getElementById('resultTitle').textContent=title;document.getElementById('resultDesc').textContent=desc;document.getElementById('ctaBtn').textContent=cta;document.getElementById('resultBox').scrollIntoView({behavior:'smooth',block:'start'});}
+</script>
+</body>
+</html>
